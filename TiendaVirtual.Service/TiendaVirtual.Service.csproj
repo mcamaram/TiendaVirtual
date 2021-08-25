@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TiendaVirtual.Models\TiendaVirtual.Models.csproj" />
+    <ProjectReference Include="..\TiendaVirtual.UnitOfWork.Interface\TiendaVirtual.UnitOfWork.Interface.csproj" />
+  </ItemGroup>
+
+</Project>

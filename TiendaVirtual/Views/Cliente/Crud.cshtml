@@ -1,0 +1,81 @@
+﻿@model TiendaVirtual.Models.Cliente
+@{
+    ViewData["Title"] = "Clientes";
+}
+<div class="app-title">
+    <div>
+        @if (Model.Id > 0)
+        {
+            <h1><i class="fa fa-pencil fa-fw"></i> Editar cliente</h1>
+        }
+        else
+        {
+            <h1><i class="fa fa-floppy-o"></i> Agregar nuevo cliente</h1>
+        }
+        <!--   <p>Table to display analytical data effectively</p>-->
+    </div>
+    <ul class="app-breadcrumb breadcrumb side">
+        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+        <li class="breadcrumb-item">Catalogos</li>
+        <li class="breadcrumb-item active"><a href="#">Clientes</a></li>
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+                <h4>Cliente</h4>
+                <hr />
+                <div class="row">
+                    <div class="col-md-4">
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input asp-for="Id" class="form-control" hidden />
+
+                            <div class="form-group">
+                                <label asp-for="Nombres" class="control-label"></label>
+                                <input asp-for="Nombres" class="form-control" />
+                                <span asp-validation-for="Nombres" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Apellidos" class="control-label"></label>
+                                <input asp-for="Apellidos" class="form-control" />
+                                <span asp-validation-for="Apellidos" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Dni" class="control-label"></label>
+                                <input asp-for="Dni" class="form-control" />
+                                <span asp-validation-for="Dni" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Telefono" class="control-label"></label>
+                                <input asp-for="Telefono" class="form-control" />
+                                <span asp-validation-for="Telefono" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Correo" class="control-label"></label>
+                                <input asp-for="Correo" class="form-control" />
+                                <span asp-validation-for="Correo" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Direccion" class="control-label"></label>
+                                <input asp-for="Direccion" class="form-control" />
+                                <span asp-validation-for="Direccion" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div>
+                    <a asp-action="Index">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

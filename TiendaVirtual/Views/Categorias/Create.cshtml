@@ -1,0 +1,65 @@
+﻿@model TiendaVirtual.Models.Categoria
+@{
+    ViewData["Title"] = "Categorias";
+}
+<div class="app-title">
+    <div>
+        @if (Model.Id > 0)
+        {
+            <h1><i class="fa fa-pencil fa-fw"></i> Editar categoria</h1>
+        }
+        else
+        {
+            <h1><i class="fa fa-floppy-o"></i> Agregar nueva categoria</h1>
+        }
+        <!--   <p>Table to display analytical data effectively</p>-->
+    </div>
+        <ul class="app-breadcrumb breadcrumb side">
+            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+            <li class="breadcrumb-item">Catalogos</li>
+            <li class="breadcrumb-item active"><a href="#">Categorias</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <h4>Categoria</h4>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form asp-action="Add">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input asp-for="Id" class="form-control" hidden/>
+                                <!-- <div class="form-group">
+                                <label asp-for="Id" class="control-label"></label>
+                                <input asp-for="Id" class="form-control" />
+                                <span asp-validation-for="Id" class="text-danger"></span>
+                                </div>-->
+                                <div class="form-group">
+                                    <label asp-for="Nombre" class="control-label"></label>
+                                    <input asp-for="Nombre" class="form-control" />
+                                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" asp-for="Activo" /> @Html.DisplayNameFor(model => model.Activo)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Create" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div>
+                        <a asp-action="Index">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+@section Scripts {
+   @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

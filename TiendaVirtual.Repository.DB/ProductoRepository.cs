@@ -10,12 +10,23 @@ namespace TiendaVirtual.Repository.DB
 {
     public class ProductoRepository : Repository, IProductoRepository
     {
-
+        #region Constantes
+        #endregion
+        #region Variables
+        #endregion Variables
+        #region Constructores
         public ProductoRepository(SqlConnection context, SqlTransaction transaction)
         {
             this._context = context;
             this._transaction = transaction;
         }
+        #endregion Constructores
+        #region Metodos
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
         public bool Create(Producto t)
         {
             bool rpta = false;
@@ -35,11 +46,7 @@ namespace TiendaVirtual.Repository.DB
                 command.Parameters.AddWithValue("@Destacado", t.Destacado);
                 command.Parameters.AddWithValue("@Activo", t.Activo);
                 command.Parameters.AddWithValue("@OperationType", 1);
-
-                int valor = Convert.ToInt32(command.ExecuteNonQuery());
-                if (valor > 0)
-                    rpta = true;
-                  
+                rpta = command.ExecuteNonQuery() > 0;    
             }
             catch(Exception ex)
             {
@@ -48,7 +55,11 @@ namespace TiendaVirtual.Repository.DB
             }
             return rpta;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Producto Get(int id)
         {
             var command = CreateCommand("sp_GetProductoById");
@@ -58,7 +69,6 @@ namespace TiendaVirtual.Repository.DB
             using (var reader = command.ExecuteReader())
             {
                 reader.Read();
-
                 return new Producto
                 {
                     Id = Convert.ToInt32(reader["Id"]),
@@ -73,7 +83,10 @@ namespace TiendaVirtual.Repository.DB
                 };
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Producto> GetAll()
         {
             var result = new List<Producto>();
@@ -103,31 +116,44 @@ namespace TiendaVirtual.Repository.DB
 
             return result;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool Remove(int id)
         {
-            int rpta = 0;
-            var command = CreateCommand("sp_CUDProducto");
-            command.CommandType = CommandType.StoredProcedure;
+            bool rpta = false;
+            try
+            {
+                var command = CreateCommand("sp_CUDProducto");
+                command.CommandType = CommandType.StoredProcedure;
 
-            command.Parameters.AddWithValue("@Id", id);
-            command.Parameters.AddWithValue("@IdCategoria", 0);
-            command.Parameters.AddWithValue("@IdMarca", 0);
-            command.Parameters.AddWithValue("@Nombre", "");
-            command.Parameters.AddWithValue("@Descripcion", "");
-            command.Parameters.AddWithValue("@Precio", 0.00);
-            command.Parameters.AddWithValue("@Url", "");
-            command.Parameters.AddWithValue("@Destacado", false);
-            command.Parameters.AddWithValue("@Activo", false);
-            command.Parameters.AddWithValue("@OperationType", 3);
+                command.Parameters.AddWithValue("@Id", id);
+                command.Parameters.AddWithValue("@IdCategoria", 0);
+                command.Parameters.AddWithValue("@IdMarca", 0);
+                command.Parameters.AddWithValue("@Nombre", "");
+                command.Parameters.AddWithValue("@Descripcion", "");
+                command.Parameters.AddWithValue("@Precio", 0.00);
+                command.Parameters.AddWithValue("@Url", "");
+                command.Parameters.AddWithValue("@Destacado", false);
+                command.Parameters.AddWithValue("@Activo", false);
+                command.Parameters.AddWithValue("@OperationType", 3);
 
-            rpta = command.ExecuteNonQuery();
-            if (rpta > 0)
-                return true;
-            else
-                return false;
+                rpta = command.ExecuteNonQuery() > 0;
+            }
+            catch(Exception ex)
+            {
+                return rpta;
+                throw new Exception(ex.Message);
+            }
+            return rpta; 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
         public bool Update(Producto t)
         {
             bool rpta = false;
@@ -147,10 +173,7 @@ namespace TiendaVirtual.Repository.DB
                 command.Parameters.AddWithValue("@Destacado", t.Destacado);
                 command.Parameters.AddWithValue("@Activo", t.Activo);
                 command.Parameters.AddWithValue("@OperationType", 2);
-
-                int valor = command.ExecuteNonQuery();
-                if (valor > 0)
-                    rpta = true;
+                rpta = command.ExecuteNonQuery() > 0; 
             }
             catch(Exception ex)
             {
@@ -159,5 +182,6 @@ namespace TiendaVirtual.Repository.DB
             }
             return rpta;
         }
+        #endregion Metodos
     }
 }
